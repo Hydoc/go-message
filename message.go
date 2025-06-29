@@ -7,11 +7,6 @@ type Message struct {
 	Payload any
 }
 
-type Event struct {
-	Type    string
-	Payload any
-}
-
 type Bus interface {
 	Dispatch(message Message) error
 	Register(message string, handler func(message Message) (*Message, error))
