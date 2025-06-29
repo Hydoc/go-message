@@ -19,7 +19,7 @@ type SimpleBus struct {
 func (b *SimpleBus) Dispatch(message Message) error {
 	handler, ok := b.handlers[message.Type]
 	if !ok {
-		return errors.New("message type not found")
+		return errors.New("message not found")
 	}
 
 	event, err := handler(message)
@@ -36,6 +36,13 @@ func (b *SimpleBus) Dispatch(message Message) error {
 
 func (b *SimpleBus) Register(message string, handler func(message Message) (*Message, error)) {
 	b.handlers[message] = handler
+}
+
+func New(messageType string, payload any) Message {
+	return Message{
+		Type:    messageType,
+		Payload: payload,
+	}
 }
 
 func NewBus() Bus {
